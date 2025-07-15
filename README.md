@@ -88,3 +88,119 @@
     pprint(mezclado)
 
 ## 3. Dado el JSON:
+
+    {
+	    "jadiazcoronado":{
+		    "nombres": "Juan Antonio",
+		    "apellidos": "Diaz Coronado",
+		    "edad":19,
+		    "colombiano":true,
+		    "deportes":["Futbol","Ajedrez","Gimnasia"]
+	    },
+	    "dmlunasol":{
+		    "nombres": "Dorotea Maritza",
+		    "apellidos": "Luna Sol",
+		    "edad":25,
+		    "colombiano":false,
+		    "deportes":["Baloncesto","Ajedrez","Gimnasia"]
+	    }
+    }
+
+Codigo: 
+
+    import json
+
+    # Función para cargar un archivo JSON
+    def cargar_json(ruta_archivo):
+        try:
+            with open(ruta_archivo, "r", encoding="utf-8") as archivo:
+                return json.load(archivo)
+        except FileNotFoundError:
+            print("El archivo no fue encontrado. Asegúrate de que exista y esté en la misma carpeta.")
+            return {}
+        except json.JSONDecodeError:
+            print("El archivo no tiene un formato JSON válido.")
+            return {}
+
+
+    # Función para buscar por deporte
+    def buscar_por_deporte(datos, deporte):
+        print(f"\nPersonas que practican '{deporte}':")
+        deporte = deporte.lower()
+        for persona in datos.values():
+            deportes_normalizados = [d.lower() for d in persona.get("deportes", [])]
+            if deporte in deportes_normalizados:
+                nombre_completo = persona["nombres"] + " " + persona["apellidos"]
+                print("-", nombre_completo)
+
+
+    # Función para buscar por rango de edades
+    def buscar_por_rango_edad(datos, edad_min, edad_max):
+        print(f"\nPersonas entre {edad_min} y {edad_max} años:")
+        for persona in datos.values():
+            edad = persona.get("edad", 0)
+            if edad_min <= edad <= edad_max:
+                nombre_completo = persona["nombres"] + " " + persona["apellidos"]
+                print("-", nombre_completo)
+
+
+    # ------------------- PROGRAMA PRINCIPAL ---------------------
+    if __name__ == "__main__":
+        datos = cargar_json("personas.json")
+
+        if datos:
+            deporte_usuario = input("Ingrese el deporte que desea buscar: ").strip()
+            buscar_por_deporte(datos, deporte_usuario)
+
+            print("\nAhora ingrese el rango de edad:")
+            try:
+                edad_min = int(input("Edad mínima: "))
+                edad_max = int(input("Edad máxima: "))
+                buscar_por_rango_edad(datos, edad_min, edad_max)
+            except ValueError:
+                print("Debes ingresar números válidos para las edades.")
+
+Al correr el codigo desde el terminal con el archivo (consulta_personas.py) basandonos en el Json que teniamo nos da una salida como esta:
+
+<img width="1101" height="406" alt="image" src="https://github.com/user-attachments/assets/63651aa1-44b9-422c-af98-4db4da83aa5f" />
+
+## 4. A través de un programa conectese a al menos 3 API's , obtenga el JSON, imprimalo y extraiga los pares de llave: valor.
+
+        import requests
+
+        # ----------- API 1: PokeAPI -----------
+        print("\n--- API 1: PokeAPI ---")
+        url1 = "https://pokeapi.co/api/v2/pokemon/pikachu"
+        response1 = requests.get(url1)
+        data1 = response1.json()
+        print(data1)
+
+        print("\nLlave : Valor de PokeAPI")
+        for key, value in data1.items():
+            print(f"{key} : {value}")
+
+
+        # ----------- API 2: Advice Slip API -----------
+        print("\n--- API 2: Advice Slip ---")
+        url2 = "https://api.adviceslip.com/advice"
+        response2 = requests.get(url2)
+        data2 = response2.json()
+        print(data2)
+
+        print("\nLlave : Valor de Advice Slip")
+        for key, value in data2.items():
+            print(f"{key} : {value}")
+
+
+        # ----------- API 3: JSONPlaceholder -----------
+        print("\n--- API 3: JSONPlaceholder Posts ---")
+        url3 = "https://jsonplaceholder.typicode.com/posts/1"
+        response3 = requests.get(url3)
+        data3 = response3.json()
+        print(data3)
+
+        print("\nLlave : Valor de JSONPlaceholder")
+        for key, value in data3.items():
+            print(f"{key} : {value}")
+
+Con esto terminarias el reto 12 (El ultimo punto (4) lo hice con ayuda de inteligencia artificial para la mejor comprension y desarrollo del codigo).
