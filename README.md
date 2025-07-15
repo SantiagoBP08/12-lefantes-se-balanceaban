@@ -160,7 +160,7 @@ Codigo:
             except ValueError:
                 print("Debes ingresar números válidos para las edades.")
 
-Al correr el codigo desde el terminal con el archivo (consulta_personas.py) basandonos en el Json que teniamo nos da una salida como esta:
+Al correr el codigo desde el terminal con el archivo (consulta_personas.py) basandonos en el Json que teniamos nos da de salida:
 
 <img width="1101" height="406" alt="image" src="https://github.com/user-attachments/assets/63651aa1-44b9-422c-af98-4db4da83aa5f" />
 
